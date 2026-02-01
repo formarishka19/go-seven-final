@@ -72,9 +72,7 @@ func TestCafeCount(t *testing.T) {
 			require.Equal(t, http.StatusOK, response.Code)
 			result := strings.TrimSpace(response.Body.String())
 
-			if len(result) == 0 {
-				assert.Equal(t, value.want, 0)
-			} else {
+			if len(result) != 0 {
 				reultCafeList := strings.Split(result, ",")
 				resultCafeCount := len(reultCafeList)
 				if value.want != 100 {
@@ -83,6 +81,9 @@ func TestCafeCount(t *testing.T) {
 					assert.Equal(t, len(list), resultCafeCount)
 
 				}
+
+			} else {
+				assert.Equal(t, value.want, 0)
 			}
 		}
 	}
@@ -111,8 +112,8 @@ func TestCafeSearch(t *testing.T) {
 		if len(result) == 0 {
 			assert.Equal(t, value.wantCount, count)
 		} else {
-			reultCafeList := strings.Split(result, ",")
-			for _, s := range reultCafeList {
+			resultCafeList := strings.Split(result, ",")
+			for _, s := range resultCafeList {
 				if strings.Contains(strings.ToLower(s), strings.ToLower(value.search)) {
 					count++
 				}
